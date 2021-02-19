@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/screens/auth_screen.dart';
+import './screens/splash_screen.dart';
 
 import './screens/cart_screen.dart';
 import './screens/products_overview_screen.dart';
@@ -50,10 +51,16 @@ class MyApp extends StatelessWidget {
             accentColor: Colors.deepOrange,
             fontFamily: 'Lato',
           ),
-          home:
-              auth.isAuth // if authenticated then display ProductsOverviewScreen else Signin screen
-                  ? ProductsOverviewScreen()
-                  : AuthScreen(),
+          home: auth
+                  .isAuth // if authenticated then display ProductsOverviewScreen else Signin screen
+              ? ProductsOverviewScreen()
+              : FutureBuilder(
+                  future: auth.tryAutoLogin(),
+                  builder: (ctc, authResultSnapshot) =>
+                      authResultSnapshot.connectionState ==
+                              ConnectionState.waiting
+                          ? SplashScreen()
+                          : AuthScreen()),
           routes: {
             ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
             CartScreen.routeName: (ctx) => CartScreen(),

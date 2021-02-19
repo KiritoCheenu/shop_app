@@ -20,9 +20,11 @@ class Auth with ChangeNotifier {
     }
     return null;
   }
-String get userId{
-  return _userId;
-}
+
+  String get userId {
+    return _userId;
+  }
+
   Future<void> _authenticate(
       String email, String password, String urlSegment) async {
     final url =
@@ -77,5 +79,12 @@ String get userId{
     //       'returnSecureToken': true,
     //     }));
     // print(json.decode(response.body));
+  }
+
+  void logout() {
+    _token = null;
+    _userId = null;
+    _expiryDate = null;
+    notifyListeners();
   }
 }

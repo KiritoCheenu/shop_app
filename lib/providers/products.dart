@@ -12,9 +12,6 @@ class Products with ChangeNotifier {
   final String userId;
   Products(this.authToken, this.userId, this._items);
   List<Product> get items {
-    // if (_showFavoritesOnly) {
-    //   return _items.where((prodItem) => prodItem.isFavorite).toList();
-    // }
     return [..._items];
   }
 
